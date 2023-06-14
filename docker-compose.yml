@@ -14,7 +14,7 @@ services:
       KAFKA_CLUSTERS_0_NAME: broker
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
       KAFKA_CLUSTERS_0_METRICS_PORT: 9101
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry0:8085
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8081
       DYNAMIC_CONFIG_ENABLED: 'true'
 
   broker:
