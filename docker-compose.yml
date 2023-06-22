@@ -1,6 +1,15 @@
 version: '3.4'
 services:
 
+  kafka-gen:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-gen
+    container_name: kafka-gen
+    volumes:
+      - ./scripts/create_cluster_id.sh:/tmp/create_cluster_id.sh
+      - ./clusterID:/tmp/clusterID
+    command: "bash -c '/tmp/create_cluster_id.sh'"
+
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -10,12 +19,10 @@ services:
       - controller1
       - broker1
       - broker2
-      - schemaregistry
     environment:
       KAFKA_CLUSTERS_0_NAME: kraft-starter
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker1:19092,broker2:19093
       KAFKA_CLUSTERS_0_METRICS_PORT: 9101
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8081
       DYNAMIC_CONFIG_ENABLED: 'true'
 
   controller1:
@@ -55,6 +62,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
       KAFKA_PROCESS_ROLES: 'broker'
@@ -81,6 +89,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
       KAFKA_PROCESS_ROLES: 'broker'
@@ -90,18 +99,3 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/ensemble-1-logs'
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
-
-  schemaregistry:
-    image: confluentinc/cp-schema-registry:7.4.0
-    hostname: schema-registry
-    container_name: schema-registry
-    depends_on:
-      - controller1
-      - broker1
-      - broker2
-    ports:
-      - 8081:8081
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker1:19092,broker2:19093'
-      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
