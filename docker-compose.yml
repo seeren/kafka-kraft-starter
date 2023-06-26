@@ -7,7 +7,7 @@ services:
     container_name: kafka-gen
     volumes:
       - ./scripts/create_cluster_id.sh:/tmp/create_cluster_id.sh
-      - ./clusterID:/clusterID
+      - ./clusterID:/tmp/clusterID
     command: "bash -c '/tmp/create_cluster_id.sh'"
 
   kafka-ui:
@@ -48,7 +48,8 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
       - controller1-data:/var/lib/kafka/data
-      - ./clusterID:/clusterID
+      - ./scripts/update_run.sh:/tmp/update_run.sh
+      - ./clusterID:/tmp/clusterID
 
   broker1:
     image: confluentinc/cp-kafka:7.4.0
@@ -79,7 +80,8 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
       - broker1-data:/var/lib/kafka/data
-      - ./clusterID:/clusterID
+      - ./scripts/update_run.sh:/tmp/update_run.sh
+      - ./clusterID:/tmp/clusterID
 
 
   broker2:
@@ -111,7 +113,8 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
       - broker2-data:/var/lib/kafka/data
-      - ./clusterID:/clusterID
+      - ./scripts/update_run.sh:/tmp/update_run.sh
+      - ./clusterID:/tmp/clusterID
 
 volumes:
   controller1-data:
