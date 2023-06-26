@@ -1,4 +1,4 @@
-/bin/bash
+#!/bin/sh
 
 file_path="/tmp/clusterID/clusterID"
 
