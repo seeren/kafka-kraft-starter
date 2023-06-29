@@ -6,8 +6,8 @@ services:
     hostname: kafka-gen
     container_name: kafka-gen
     volumes:
-      - ./scripts/create_cluster_id.sh:/tmp/create_cluster_id.sh
-      - ./clusterID:/tmp/clusterID
+      - ./.docker/scripts/create_cluster_id.sh:/tmp/create_cluster_id.sh
+      - ./:/tmp/clusterID
     command: "bash -c '/tmp/create_cluster_id.sh'"
 
   kafka-ui:
@@ -37,7 +37,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1      
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
       KAFKA_PROCESS_ROLES: 'controller'
@@ -46,10 +46,9 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - controller1-data:/var/lib/kafka/data
-      - ./scripts/update_run.sh:/tmp/update_run.sh
-      - ./clusterID:/tmp/clusterID
 
   broker1:
     image: confluentinc/cp-kafka:7.4.0
@@ -78,11 +77,9 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - broker1-data:/var/lib/kafka/data
-      - ./scripts/update_run.sh:/tmp/update_run.sh
-      - ./clusterID:/tmp/clusterID
-
 
   broker2:
     image: confluentinc/cp-kafka:7.4.0
@@ -111,10 +108,9 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - broker2-data:/var/lib/kafka/data
-      - ./scripts/update_run.sh:/tmp/update_run.sh
-      - ./clusterID:/tmp/clusterID
 
 volumes:
   controller1-data:
