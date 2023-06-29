@@ -1,6 +1,6 @@
 # Kafka KRaft Starter
 
-This repository contain Kafka without ZooKeeper in cluster mode ready for developement
+This repository contain Kafka without ZooKeeper in cluster mode ready for developement.
 
 * * *
 
@@ -22,6 +22,18 @@ _Start services._
 
 ```bash
 docker compose up
+```
+
+### Cluster id
+
+_Generate a fresh cluster id._
+
+```bash
+rm .env
+```
+
+```bash
+docker compose up kafka-gen
 ```
 
 * * *
