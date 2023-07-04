@@ -23,6 +23,7 @@ services:
       KAFKA_CLUSTERS_0_NAME: kraft-starter
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker1:19092,broker2:19093
       KAFKA_CLUSTERS_0_METRICS_PORT: 9101
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8081
       DYNAMIC_CONFIG_ENABLED: 'true'
 
   kafka-topics:
@@ -126,6 +127,21 @@ services:
       CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - broker2-data:/var/lib/kafka/data
+
+  schemaregistry:
+    image: confluentinc/cp-schema-registry:7.4.0
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      - controller1
+      - broker1
+      - broker2
+    ports:
+      - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker1:19092,broker2:19093'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
 
 volumes:
   controller1-data:
