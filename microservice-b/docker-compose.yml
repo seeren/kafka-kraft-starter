@@ -12,4 +12,9 @@ services:
       - /apps/microservice-b/node_modules
     ports:
       - ${SERVER_PORT}:3000
+    networks:
+      - kafka-kraft
     command: npm run start
+
+networks:
+  kafka-kraft:
