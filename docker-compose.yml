@@ -15,6 +15,8 @@ services:
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
+    networks:
+      - kafka-kraft
     depends_on:
       - controller1
       - broker1
@@ -34,12 +36,11 @@ services:
       - controller1
       - broker1
       - broker2
+    networks:
+      - kafka-kraft
     volumes:
       - ./create_topics.sh:/create_topics.sh
-    command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                       cub kafka-ready -b broker1:19092 1 40 && \
-                       kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.cat.comming && \
-                       kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.mouse.run.away'"
+    command: "bash -c 'echo Waiting for Kafka to be ready... && cub kafka-ready -b broker1:19092 1 40 && kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.cat.comming && kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.mouse.run.away'"
 
   controller1:
     image: confluentinc/cp-kafka:7.4.0
@@ -47,6 +48,8 @@ services:
     container_name: controller1
     ports:
       - 9091:9091
+    networks:
+      - kafka-kraft
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -74,6 +77,8 @@ services:
       - controller1
     ports:
       - 9092:9092
+    networks:
+      - kafka-kraft
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -105,6 +110,8 @@ services:
       - controller1
     ports:
       - 9093:9093
+    networks:
+      - kafka-kraft
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -138,6 +145,8 @@ services:
       - broker2
     ports:
       - 8081:8081
+    networks:
+      - kafka-kraft
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker1:19092,broker2:19093'
@@ -147,3 +156,8 @@ volumes:
   controller1-data:
   broker1-data:
   broker2-data:
+
+
+networks:
+  kafka-kraft:
+    driver: bridge
