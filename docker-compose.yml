@@ -6,9 +6,8 @@ services:
     hostname: kafka-gen
     container_name: kafka-gen
     volumes:
-      - ./.docker/scripts/create_cluster_id.sh:/tmp/create_cluster_id.sh
-      - ./:/tmp/clusterID
-    command: "bash -c '/tmp/create_cluster_id.sh'"
+      - ./data:/data/
+    command: "bash -c 'kafka-storage random-uuid > /data/clusterID'"
 
   kafka-ui:
     container_name: kafka-ui
@@ -16,7 +15,6 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - controller1
       - broker1
       - broker2
     environment:
@@ -45,6 +43,8 @@ services:
     image: confluentinc/cp-kafka:7.4.0
     hostname: controller1
     container_name: controller1
+    depends_on:
+      - kafka-gen
     ports:
       - 9091:9091
     environment:
@@ -62,10 +62,12 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - controller1-data:/var/lib/kafka/data
-
+      - ./data/clusterID:/data/clusterID
+      - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
+   
   broker1:
     image: confluentinc/cp-kafka:7.4.0
     hostname: broker1
@@ -93,9 +95,11 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - broker1-data:/var/lib/kafka/data
+      - ./data/clusterID:/data/clusterID
+      - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
 
   broker2:
     image: confluentinc/cp-kafka:7.4.0
@@ -124,9 +128,11 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      CLUSTER_ID: ${CLUSTER_ID}
     volumes:
       - broker2-data:/var/lib/kafka/data
+      - ./data/clusterID:/data/clusterID
+      - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
 
   schemaregistry:
     image: confluentinc/cp-schema-registry:7.4.0
