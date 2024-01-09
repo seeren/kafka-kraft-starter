@@ -15,7 +15,6 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - controller1
       - broker1
       - broker2
     environment:
@@ -43,6 +42,8 @@ services:
     image: confluentinc/cp-kafka:7.4.0
     hostname: controller1
     container_name: controller1
+    depends_on:
+      - kafka-gen
     ports:
       - 9091:9091
     environment:
@@ -64,7 +65,7 @@ services:
       - controller1-data:/var/lib/kafka/data
       - ./data/clusterID:/data/clusterID
       - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
-    command: "bash -c 'if [ ! -f /tmp/update-bash-config.sh ]; then echo \"ERROR: Did you forget the update-bash-config.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update-bash-config.sh && /etc/confluent/docker/run ; fi'"
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
    
   broker1:
     image: confluentinc/cp-kafka:7.4.0
@@ -95,9 +96,9 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
       - broker1-data:/var/lib/kafka/data
-      - ./data/clusterID:/tmp/clusterID
+      - ./data/clusterID:/data/clusterID
       - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
-    command: "bash -c 'if [ ! -f /tmp/update-bash-config.sh ]; then echo \"ERROR: Did you forget the update-bash-config.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update-bash-config.sh && /etc/confluent/docker/run ; fi'"
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
 
   broker2:
     image: confluentinc/cp-kafka:7.4.0
@@ -128,9 +129,9 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
       - broker2-data:/var/lib/kafka/data
-      - ./data/clusterID:/tmp/clusterID
+      - ./data/clusterID:/data/clusterID
       - ./.docker/scripts/update-bash-config.sh:/tmp/update-bash-config.sh
-    command: "bash -c 'if [ ! -f /tmp/update-bash-config.sh ]; then echo \"ERROR: Did you forget the update-bash-config.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update-bash-config.sh && /etc/confluent/docker/run ; fi'"
+    command: "bash -c '/tmp/update-bash-config.sh && /etc/confluent/docker/run'"
 
 volumes:
   controller1-data:
