@@ -26,18 +26,13 @@ services:
 
   kafka-topics:
     image: confluentinc/cp-kafka:7.4.0
-    hostname: kafka-topics
-    container_name: kafka-topics
     depends_on:
-      - controller1
       - broker1
-      - broker2
     volumes:
-      - ./create_topics.sh:/create_topics.sh
+      - ./.docker/scripts/create-topics.sh:/tmp/create-topics.sh
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                       cub kafka-ready -b broker1:19092 1 40 && \
-                       kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.cat.comming && \
-                       kafka-topics --bootstrap-server broker1:19092 --create --topic kafka.karft.starter.fact.mouse.run.away'"
+              cub kafka-ready -b broker1:19092 1 30 && \
+              bash /tmp/create-topics.sh'"
 
   controller1:
     image: confluentinc/cp-kafka:7.4.0
