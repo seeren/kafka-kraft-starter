@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+
+  customer:
+    container_name: customer
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    restart: always
+    volumes:
+      - ./:/apps/customer
+      - dev-modules:/apps/customer/node_modules
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    depends_on:
+      - mariadb
+    ports:
+      - 3001:3001
+    command: npm start
+
+  mariadb:
+    container_name: customer-mariadb
+    image: mariadb:11.0.3
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MYSQL_TCP_PORT: 3007
+      MARIADB_USER: user
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_PASSWORD: password
+      MARIADB_DATABASE: customer
+      MARIADB_ROOT_HOST: mariadb
+    ports:
+      - 3007:3007
+
+volumes:
+  dev-modules:
+  mariadb:
