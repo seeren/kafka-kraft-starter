@@ -8,7 +8,6 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'prettier',
-    'jest',
     'simple-import-sort',
     'eslint-plugin-import',
   ],
@@ -17,9 +16,7 @@ module.exports = {
     'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'plugin:import/errors',
-    'plugin:jest/recommended',
-    'plugin:jest/style',
+    'plugin:import/errors'
   ],
   settings: {
     'import/resolver': {

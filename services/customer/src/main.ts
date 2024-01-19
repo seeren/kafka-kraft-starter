@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
 
-import { AppModule } from 'src/app/app.module';
+import { AppModule } from './app/app.module';
 
 declare const module: {
   hot: {
@@ -14,7 +14,9 @@ declare const module: {
 const bootstrap = async () => {
   const application = await NestFactory.create(AppModule);
   useContainer(application.select(AppModule), { fallbackOnErrors: true });
-  application.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  application.useGlobalPipes(
+    new ValidationPipe({ transform: true, whitelist: true }),
+  );
   await application.listen(3001);
   if (module.hot) {
     module.hot.accept();
