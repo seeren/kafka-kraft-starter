@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  customer:
+    container_name: customer
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    restart: always
+    volumes:
+      - ./:/apps/customer
+      - dev-modules:/apps/customer/node_modules
+    environment:
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    command: npm start
+
+  mariadb:
+    container_name: customer-mariadb
+    env_file:
+      - .env
+    image: mariadb:10.5
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MYSQL_TCP_PORT: ${DATABASE_PORT}
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_NAME}
+      MARIADB_ROOT_HOST: ${DATABASE_HOST}
+    healthcheck:
+      test: "/usr/bin/mysql --user=${DATABASE_USER} --password=${DATABASE_PASSWORD} --execute \"SHOW DATABASES;\""
+      interval: 1s
+      timeout: 10s
+      retries: 10
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+
+volumes:
+  dev-modules:
+  mariadb:

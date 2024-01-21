@@ -1,1 +1,3 @@
 /data
+/services/*/node_modules
+/services/*/dist
