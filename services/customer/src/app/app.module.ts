@@ -5,6 +5,5 @@ import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [SharedModule, CustomerModule],
-  controllers: [],
 })
 export class AppModule {}
