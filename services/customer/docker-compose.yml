@@ -3,6 +3,8 @@ version: '3.7'
 services:
   customer:
     container_name: customer
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,6 +25,8 @@ services:
 
   mariadb:
     container_name: customer-mariadb
+    env_file:
+      - .env
     image: mariadb:10.5
     restart: always
     volumes:

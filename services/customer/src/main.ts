@@ -17,7 +17,7 @@ const bootstrap = async () => {
   application.useGlobalPipes(
     new ValidationPipe({ transform: true, whitelist: true }),
   );
-  await application.listen(3001);
+  await application.listen(+process.env.SERVER_PORT);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => application.close());
