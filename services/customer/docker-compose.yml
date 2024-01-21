@@ -1,7 +1,6 @@
-version: "3.7"
+version: '3.7'
 
 services:
-
   customer:
     container_name: customer
     build:
@@ -13,29 +12,35 @@ services:
       - ./:/apps/customer
       - dev-modules:/apps/customer/node_modules
     environment:
-      MARIADB_USER: user
-      MARIADB_PASSWORD: password
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     ports:
-      - 3001:3001
+      - ${SERVER_PORT}:${SERVER_PORT}
     command: npm start
 
   mariadb:
     container_name: customer-mariadb
-    image: mariadb:11.0.3
+    image: mariadb:10.5
     restart: always
     volumes:
       - mariadb:/var/lib/mysql
     environment:
-      MYSQL_TCP_PORT: 3007
-      MARIADB_USER: user
-      MARIADB_ROOT_PASSWORD: password
-      MARIADB_PASSWORD: password
-      MARIADB_DATABASE: customer
-      MARIADB_ROOT_HOST: mariadb
+      MYSQL_TCP_PORT: ${DATABASE_PORT}
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_NAME}
+      MARIADB_ROOT_HOST: ${DATABASE_HOST}
+    healthcheck:
+      test: "/usr/bin/mysql --user=${DATABASE_USER} --password=${DATABASE_PASSWORD} --execute \"SHOW DATABASES;\""
+      interval: 1s
+      timeout: 10s
+      retries: 10
     ports:
-      - 3007:3007
+      - ${DATABASE_PORT}:${DATABASE_PORT}
 
 volumes:
   dev-modules:
