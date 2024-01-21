@@ -1,8 +1,0 @@
-{
-  "recommendations": [
-    "rvest.vs-code-prettier-eslint",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "davidanson.vscode-markdownlint"
-  ]
-}

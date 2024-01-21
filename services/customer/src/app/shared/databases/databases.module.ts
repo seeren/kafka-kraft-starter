@@ -3,9 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import type { DataSourceOptions } from 'typeorm';
 
-import databaseConfig, {
-  CONFIG_DATABASE,
-} from './../../../config/database.config';
+import databaseConfig, { CONFIG_DATABASE } from './database.config';
 
 @Module({
   imports: [
