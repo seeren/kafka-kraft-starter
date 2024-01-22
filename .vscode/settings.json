@@ -1,15 +1,4 @@
 {
-  "diffEditor.ignoreTrimWhitespace": false,
-  "editor.rulers": [
-    {
-      "column": 80,
-      "color": "#e19213"
-    }
-  ],
-  "editor.minimap.renderCharacters": false,
-  "editor.minimap.size": "fill",
-  "editor.minimap.maxColumn": 50,
-  "editor.tabSize": 2,
   "eslint.format.enable": true,
   "[javascript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
@@ -28,6 +17,60 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },  "diffEditor.ignoreTrimWhitespace": false,
+  "window.zoomLevel": -1,
+  "workbench.colorTheme": "Material Theme Ocean High Contrast",
+  "editor.rulers": [
+    {
+      "column": 80,
+      "color": "#e19213"
+    }
+  ],
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.size": "fill",
+  "editor.minimap.maxColumn": 50,
+  "editor.tabSize": 2,
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#edc066",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#77a5e2",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+
+    {
+      "tag": "todo",
+      "color": "#000000",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "#FFFFFF",
+      "bold": true,
+      "italic": false
+    }
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#0d1536",
+    "activityBar.background": "#0d1536",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#9a253c",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#0d1536"
   },
-  "typescript.preferences.importModuleSpecifier": "non-relative"
+  "peacock.color": "#03050d",
+  "peacock.affectTitleBar": false,
+  "peacock.affectStatusBar": false,
+  "peacock.showColorInStatusBar": false
 }
