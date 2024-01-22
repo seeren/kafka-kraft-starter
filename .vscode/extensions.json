@@ -1,8 +1,18 @@
 {
   "recommendations": [
+    "ms-azuretools.vscode-docker",
+    "equinusocio.vsc-material-theme",
+    "equinusocio.vsc-material-theme-icons",
+    "eamodio.gitlens",
     "rvest.vs-code-prettier-eslint",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "davidanson.vscode-markdownlint"
+    "bierner.markdown-mermaid",
+    "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
+    "aaron-bond.better-comments",
+    "yzhang.markdown-all-in-one",
+    "tabnine.tabnine-vscode",
+    "vscode-icons-team.vscode-icons",
+    "johnpapa.vscode-peacock"
   ]
 }
