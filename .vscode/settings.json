@@ -9,17 +9,22 @@
   "[html]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[json]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
-  },  "diffEditor.ignoreTrimWhitespace": false,
-  "window.zoomLevel": -1,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "window.zoomLevel": 0,
   "workbench.colorTheme": "Material Theme Ocean High Contrast",
+  "workbench.iconTheme": "vscode-icons",
   "editor.rulers": [
     {
       "column": 80,
@@ -61,16 +66,12 @@
     }
   ],
   "workbench.colorCustomizations": {
-    "activityBar.background": "#2b121e",
+    "activityBar.background": "#de254c",
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#3f5a26",
+    "activityBarBadge.background": "#672a37",
     "activityBarBadge.foreground": "#e7e7e7",
-    "sash.hoverBorder": "#2b121e",
-    "activityBar.activeBackground": "#2b121e"
-  },
-  "peacock.color": "#070305",
-  "peacock.affectTitleBar": false,
-  "peacock.affectStatusBar": false,
-  "peacock.showColorInStatusBar": false
+    "sash.hoverBorder": "#111111",
+    "activityBar.activeBackground": "#111111"
+  }
 }

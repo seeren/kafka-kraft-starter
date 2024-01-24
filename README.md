@@ -2,13 +2,13 @@
 
 This repository contain Kafka without ZooKeeper in cluster mode ready for developement.
 
-* * *
+---
 
 ## Prerequist
 
 Docker installed globally with Option api >= 3.4
 
-* * *
+---
 
 ## Installation
 
@@ -36,7 +36,7 @@ rm .env
 docker compose up kafka-gen
 ```
 
-* * *
+---
 
 ## Usage
 
