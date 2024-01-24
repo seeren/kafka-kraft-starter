@@ -1,6 +1,6 @@
 # Bundle
 
-FROM node:21 AS build
+FROM node:21.6.0-alpine AS build
 
 WORKDIR /apps/customer
 
@@ -18,7 +18,7 @@ RUN npm run build
 
 # Development
 
-FROM node:19 AS development
+FROM node:21.6.0-alpine AS development
 
 ENV NODE_ENV=development
 
