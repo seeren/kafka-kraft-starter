@@ -24,10 +24,18 @@ ENV NODE_ENV=development
 
 ENV API_ENVIRONMENT=development
 
+RUN apk add git zsh
+
 WORKDIR /apps/customer
 
 USER node
 
 COPY --from=build /apps/customer .
+
+RUN git clone https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/zsh-autosuggestions && \
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/zsh-syntax-highlighting && \
+  cat .docker/.p10k.zsh >> ~/.p10k.zsh && \
+  cat .docker/.zshrc >> ~/.zshrc
 
 EXPOSE 3000
