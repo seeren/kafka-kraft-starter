@@ -12,7 +12,6 @@
     "aaron-bond.better-comments",
     "yzhang.markdown-all-in-one",
     "tabnine.tabnine-vscode",
-    "vscode-icons-team.vscode-icons",
-    "johnpapa.vscode-peacock"
+    "vscode-icons-team.vscode-icons"
   ]
 }
