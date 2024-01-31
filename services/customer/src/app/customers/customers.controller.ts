@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -11,8 +12,6 @@ export class CustomersController {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  @Get()
-  findAll(): Promise<Customer[]> {
-    return this.customerRepository.find();
-  }
+  @MessagePattern('kafka-karft-starter.customers.1.0.action.create')
+  findAll(): void {}
 }
