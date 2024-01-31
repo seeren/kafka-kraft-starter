@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 
 import { Customer } from './customer.entity';
 
-@Controller('customers')
-export class CustomerController {
+@Controller()
+export class CustomersController {
   constructor(
     @InjectRepository(Customer)
     private readonly customerRepository: Repository<Customer>,
