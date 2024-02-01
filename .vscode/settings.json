@@ -22,7 +22,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "diffEditor.ignoreTrimWhitespace": false,
-  "window.zoomLevel": 0,
   "workbench.colorTheme": "Material Theme Ocean High Contrast",
   "workbench.iconTheme": "vscode-icons",
   "editor.rulers": [
