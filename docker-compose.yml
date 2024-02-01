@@ -5,6 +5,8 @@ services:
     image: confluentinc/cp-kafka:7.4.0
     hostname: kafka-gen
     container_name: kafka-gen
+    networks:
+      - kafka-network
     volumes:
       - ./data:/data/
     command: "bash -c 'kafka-storage random-uuid > /data/clusterID'"
@@ -14,6 +16,8 @@ services:
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
+    networks:
+      - kafka-network
     depends_on:
       - schemaregistry
     environment:
@@ -27,6 +31,8 @@ services:
     image: confluentinc/cp-kafka:7.4.0
     depends_on:
       - broker1
+    networks:
+      - kafka-network
     volumes:
       - ./.docker/scripts/create-topics.sh:/tmp/create-topics.sh
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
@@ -41,6 +47,8 @@ services:
       - kafka-gen
     ports:
       - 9091:9091
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -70,6 +78,8 @@ services:
       - controller1
     ports:
       - 9092:9092
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -103,6 +113,8 @@ services:
       - controller1
     ports:
       - 9093:9093
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -138,10 +150,16 @@ services:
       - broker2
     ports:
       - 8081:8081
+    networks:
+      - kafka-network
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker1:19092,broker2:19093'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
+networks:
+  kafka-network:
+    driver: bridge
 
 volumes:
   controller1-data:
