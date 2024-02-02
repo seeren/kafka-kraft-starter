@@ -1,17 +1,20 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { InsertResult } from 'typeorm';
 
-import { Customer } from './customer.entity';
+import { CustomerService } from './customer.service';
+import { CreateCustomerDto } from './dtos/create-customer.dto';
 
 @Controller()
 export class CustomersController {
-  constructor(
-    @InjectRepository(Customer)
-    private readonly customerRepository: Repository<Customer>,
-  ) {}
+  constructor(private readonly customerService: CustomerService) {}
 
   @MessagePattern('kafka-karft-starter.customers.1.0.action.create')
-  findAll(): void {}
+  create(
+    @Payload() createCustomerDto: CreateCustomerDto,
+  ): Promise<InsertResult> {
+    console.log('NNN');
+
+    return this.customerService.createCustomer(createCustomerDto);
+  }
 }

@@ -6,8 +6,8 @@ export class Customer {
   id: string;
 
   @Column()
-  firstname: string;
+  firstName: string;
 
   @Column()
-  lastname: string;
+  lastName: string;
 }
