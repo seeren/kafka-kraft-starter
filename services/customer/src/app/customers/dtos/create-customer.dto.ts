@@ -9,5 +9,5 @@ export class CreateCustomerDto {
   @IsString()
   @MinLength(3)
   @MaxLength(255)
-  lastname: string;
+  lastName: string;
 }

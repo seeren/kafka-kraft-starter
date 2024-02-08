@@ -6,7 +6,6 @@ export class RcpEBadRequestExceptionFilter
   implements ExceptionFilter<BadRequestException>
 {
   catch(exception: BadRequestException) {
-    console.log('RcpEBadRequestExceptionFilter');
     return throwError(() => exception.getResponse() || exception.message);
   }
 }
