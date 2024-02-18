@@ -23,11 +23,6 @@ const bootstrap = async () => {
   useContainer(application.select(AppModule), { fallbackOnErrors: true });
   application.useGlobalPipes(pipe);
   await application.listen();
-  // const application = await NestFactory.create(AppModule);
-  // const pipe = new ValidationPipe({ transform: true, whitelist: true });
-  // useContainer(application.select(AppModule), { fallbackOnErrors: true });
-  // application.useGlobalPipes(pipe);
-  // await application.listen(3001);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => application.close());
