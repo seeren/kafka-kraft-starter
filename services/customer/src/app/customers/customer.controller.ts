@@ -1,6 +1,7 @@
 import {
   ClassSerializerInterceptor,
   Controller,
+  ParseUUIDPipe,
   UseFilters,
   UseInterceptors,
 } from '@nestjs/common';
@@ -35,7 +36,7 @@ export class CustomerController {
   @UseFilters(RcpEBadRequestExceptionFilter)
   @UseInterceptors(ClassSerializerInterceptor)
   @MessagePattern('kafka-karft-starter.customers.1.0.action.retrieve')
-  findOne(@Payload('id') id: string): Promise<Customer> {
+  findOne(@Payload('id', ParseUUIDPipe) id: string): Promise<Customer> {
     return this.queryBus.execute<CustomerByIdQuery, Customer>(
       new CustomerByIdQuery(id),
     );
