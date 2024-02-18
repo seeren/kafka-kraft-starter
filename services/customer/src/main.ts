@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
